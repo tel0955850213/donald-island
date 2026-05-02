@@ -38,7 +38,7 @@ struct SessionQuestionForm: View {
 
     nonisolated static func questionListMaximumHeight(for maxPanelHeight: Double) -> CGFloat {
         let minimumQuestionListHeight: CGFloat = 230
-        let reservedPanelChromeHeight: CGFloat = 250
+        let reservedPanelChromeHeight: CGFloat = 160
         let outerScrollSafetyInset: CGFloat = 80
 
         return max(
@@ -283,17 +283,23 @@ struct SessionQuestionForm: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             if question.allowsOther {
-                TextField("其他答案", text: Binding(
-                    get: { otherAnswers[question.id] ?? "" },
-                    set: { otherAnswers[question.id] = $0 }
-                ))
-                .textFieldStyle(.plain)
-                .padding(10)
-                .disabled(!isEditable)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .strokeBorder(Color.white.opacity(0.14), lineWidth: 1)
-                )
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Other")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.45))
+                    TextField("輸入自訂答案…", text: Binding(
+                        get: { otherAnswers[question.id] ?? "" },
+                        set: { otherAnswers[question.id] = $0 }
+                    ))
+                    .textFieldStyle(.plain)
+                    .padding(10)
+                    .disabled(!isEditable)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .strokeBorder(Color.white.opacity(0.25), lineWidth: 1)
+                    )
+                }
+                .padding(.top, 6)
             }
         } else if question.isSecret {
             SecureField("Answer", text: Binding(
