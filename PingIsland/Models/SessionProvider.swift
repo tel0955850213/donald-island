@@ -857,7 +857,7 @@ struct SessionIntervention: Equatable, Identifiable, Sendable {
                     ?? false,
                 allowsOther: question["isOther"] as? Bool
                     ?? question["allowsOther"] as? Bool
-                    ?? false,
+                    ?? !normalizedOptions.isEmpty,
                 isSecret: question["isSecret"] as? Bool
                     ?? question["secret"] as? Bool
                     ?? false
